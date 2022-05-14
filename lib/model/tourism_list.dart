@@ -1,17 +1,21 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:movie/detail_screen.dart';
-import 'package:movie/model/movie_place.dart';
+import '../detail_screen.dart';
+import 'movie_place.dart';
 
-import 'list_item.dart';
+class TourismList extends StatefulWidget {
+  final List<TourismPlace> doneTourismPlaceList;
 
-class MainScreen extends StatefulWidget {
-  MainScreen({Key? key}) : super(key: key);
+  const TourismList({
+    Key? key,
+    required this.doneTourismPlaceList
+  }) :super (key: key);
 
   @override
-  _MainScreenState createState() => _MainScreenState();
+  _TourismListState createState() => _TourismListState(doneTourismPlaceList);
 }
 
-class _MainScreenState extends State<MainScreen>{
+class _TourismListState extends State<TourismList> {
   final List<TourismPlace> doneTourismPlaceList = [];
   final List<TourismPlace> tourismPlaceList = [
     TourismPlace(
@@ -31,7 +35,7 @@ class _MainScreenState extends State<MainScreen>{
       name: 'Doctor Strange in The Multiverse of Madness',
       location: 'XXI',
       imageAsset: 'assets/Images/drstrange.jpg',
-      desc:'Dr Stephen Strange casts a forbidden spell that opens a portal to the multiverse. However, a threat emerges that may be too big for his team to handle.',
+      desc: 'Dr Stephen Strange casts a forbidden spell that opens a portal to the multiverse. However, a threat emerges that may be too big for his team to handle.',
       clock: '08.30 - 16.30',
       ticket: 'Rp.30000',
       buka: 'Setiap Hari',
@@ -107,12 +111,23 @@ class _MainScreenState extends State<MainScreen>{
     ),
   ];
 
+  _TourismListState(this.doneTourismPlaceList);
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Film 2022'),
-      ),
-    );
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        final TourismPlace place = tourismPlaceList[index];
+        return InkWell(
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (contex) {
+              return DetailScreen(place: place);
+            })); // MaterialPageRoute
+          },
+          child: ListItem(), // ListItem
+        ); // InkWell
+      },
+      itemCount: tourismPlaceList.length,
+    ); // ListView.builder
   }
 }
