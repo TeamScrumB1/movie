@@ -1,6 +1,3 @@
-import 'dart:html';
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:movie/model/movie_place.dart';
 
@@ -23,7 +20,7 @@ class DoneTourismList extends StatelessWidget{
           return Card(
             color: Colors.white60,
             child: Row(
-              crossAxisAlignment: CrossAxistAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget> [
                 Text(

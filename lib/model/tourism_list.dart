@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../detail_screen.dart';
+import '../list_item.dart';
 import 'movie_place.dart';
 
 class TourismList extends StatefulWidget {
@@ -16,7 +17,7 @@ class TourismList extends StatefulWidget {
 }
 
 class _TourismListState extends State<TourismList> {
-  final List<TourismPlace> doneTourismPlaceList = [];
+  final List<TourismPlace> doneTourismPlaceList;
   final List<TourismPlace> tourismPlaceList = [
     TourismPlace(
       name: 'KKN di Desa Penari',
@@ -124,7 +125,19 @@ class _TourismListState extends State<TourismList> {
               return DetailScreen(place: place);
             })); // MaterialPageRoute
           },
-          child: ListItem(), // ListItem
+          child: ListItem(
+            place: place,
+            isDone: doneTourismPlaceList.contains(place),
+              onCheckboxClick: (bool? value) {
+                setState(() {
+                  if (value != null) {
+                    value
+                        ? doneTourismPlaceList.add(place)
+                        : doneTourismPlaceList.remove(place);
+                  }
+                });
+              },
+          ), // ListItem
         ); // InkWell
       },
       itemCount: tourismPlaceList.length,

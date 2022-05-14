@@ -16,6 +16,7 @@ class ListItem extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: isDone ? Colors.white60 : Colors.white,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget> [
@@ -42,6 +43,11 @@ class ListItem extends StatelessWidget{
                 ],
               ),
             ),
+          ),
+          Checkbox(
+            checkColor: Colors.blueAccent,
+            value: isDone,
+            onChanged: onCheckboxClick,
           ),
         ],
       ),
