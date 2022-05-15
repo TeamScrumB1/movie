@@ -2,21 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:movie/detail_screen.dart';
 import 'package:movie/model/movie_place.dart';
 import 'package:movie/model/tourism_list.dart';
-
+import 'package:movie/provider/done_tourism_provider.dart';
 import 'done_tourism_list.dart';
+import 'package:movie/done_tourism_list.dart';
 import 'list_item.dart';
 
 class MainScreen extends StatefulWidget {
   MainScreen({Key? key}) : super(key: key);
-
   @override
   _MainScreenState createState() => _MainScreenState();
 }
 
 class _MainScreenState extends State<MainScreen>{
-  final List<TourismPlace> doneTourismPlaceList = [];
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,15 +26,13 @@ class _MainScreenState extends State<MainScreen>{
                   Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context){
-                        return DoneTourismList(
-                          doneTourismPlaceList: doneTourismPlaceList
-                        );
+                        return const DoneTourismList();
                   }),);
                 },
             )
           ],
       ),
-      body: TourismList(doneTourismPlaceList: doneTourismPlaceList),
+      body: TourismList(),
     );
   }
 }

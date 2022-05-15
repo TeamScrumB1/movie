@@ -1,23 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:movie/provider/done_tourism_provider.dart';
+import 'package:provider/provider.dart';
 import '../detail_screen.dart';
 import '../list_item.dart';
 import 'movie_place.dart';
+import 'package:movie/list_item.dart';
+
 
 class TourismList extends StatefulWidget {
-  final List<TourismPlace> doneTourismPlaceList;
-
-  const TourismList({
-    Key? key,
-    required this.doneTourismPlaceList
-  }) :super (key: key);
+  const TourismList({Key? key}) :super (key: key);
 
   @override
-  _TourismListState createState() => _TourismListState(doneTourismPlaceList);
+  _TourismListState createState() => _TourismListState();
 }
 
 class _TourismListState extends State<TourismList> {
-  final List<TourismPlace> doneTourismPlaceList;
   final List<TourismPlace> tourismPlaceList = [
     TourismPlace(
       name: 'KKN di Desa Penari',
@@ -112,8 +110,6 @@ class _TourismListState extends State<TourismList> {
     ),
   ];
 
-  _TourismListState(this.doneTourismPlaceList);
-
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -121,26 +117,28 @@ class _TourismListState extends State<TourismList> {
         final TourismPlace place = tourismPlaceList[index];
         return InkWell(
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (contex) {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
               return DetailScreen(place: place);
-            })); // MaterialPageRoute
+            }));
           },
-          child: ListItem(
-            place: place,
-            isDone: doneTourismPlaceList.contains(place),
-              onCheckboxClick: (bool? value) {
-                setState(() {
-                  if (value != null) {
-                    value
-                        ? doneTourismPlaceList.add(place)
-                        : doneTourismPlaceList.remove(place);
-                  }
-                });
-              },
-          ), // ListItem
-        ); // InkWell
+          child: Consumer<DoneTourismProvider>(
+            builder: (context, DoneTourismProvider data, widget){
+              return ListItem(
+                place: place,
+                isDone: data.doneTourismPlaceList.contains(place),
+                onCheckboxClick: (bool? value) {
+                  setState(() {
+                    if (value != null) {
+                      data.complete(place, value);
+                    }
+                  });
+                },
+              );
+            },
+          ),
+        );
       },
       itemCount: tourismPlaceList.length,
-    ); // ListView.builder
+    );
   }
 }
