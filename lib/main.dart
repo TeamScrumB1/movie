@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:movie/provider/done_tourism_provider.dart';
+import 'package:provider/provider.dart';
 
 import 'main_screen.dart';
 void main() {
@@ -10,10 +12,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(),
-      home:  MainScreen(),
+    return ChangeNotifierProvider(
+      create: (context) => DoneTourismProvider(),
+      child: MaterialApp(
+        title: 'List Movie XXI',
+        theme: ThemeData(),
+        home:  MainScreen(),
+      ),
     );
   }
 }
